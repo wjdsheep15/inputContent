@@ -32,6 +32,7 @@
             android:lines="5"
             android:textColor="@color/black"
             android:gravity="top"
+            tools:ignore="SpeakableTextPresentCheck"
             />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -68,6 +69,7 @@
             android:lines="25"
             android:textColor="@color/black"
             android:gravity="top"
+            tools:ignore="SpeakableTextPresentCheck"
             />
     </com.google.android.material.textfield.TextInputLayout>
 
