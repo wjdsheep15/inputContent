@@ -15,7 +15,8 @@
         android:text="일기장 작성중"
         android:textColor="@color/black"
         android:textSize="40sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:fontFamily="@font/gangwon"/>
 
     <View
         android:layout_width="match_parent"
@@ -228,10 +229,39 @@
                 android:layout_marginEnd="16dp"
                 />
 
-            <CalendarView
+            <TextView
+                android:id="@+id/data_picker_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="선택 날짜 "
+                android:textSize="20sp"/>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="10dp">
+
+                <Button
+                    android:id="@+id/data_picker_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="날짜 선택"/>
+
+                <Button
+                    android:id="@+id/data_range_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="기간 선택"/>
+
+
+            </LinearLayout>
+
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
