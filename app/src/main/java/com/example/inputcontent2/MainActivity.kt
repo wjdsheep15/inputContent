@@ -8,17 +8,27 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
+import androidx.core.util.Pair
 import com.example.inputcontent2.databinding.ActivityMainBinding
+import com.google.android.material.datepicker.MaterialDatePicker
 import java.io.File
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
+import java.util.Locale
+
 
 class MainActivity : AppCompatActivity() {
 
+
+
     lateinit var binding: ActivityMainBinding
     lateinit var filePath: String
+    lateinit var calendar : Calendar
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,6 +112,61 @@ class MainActivity : AppCompatActivity() {
             requestCameraFileLauncher.launch(intent)
 
         }
+
+
+
+        //calendar Date
+         val dataPicker = MaterialDatePicker.Builder.datePicker()
+             .setTitleText("Select date")
+             .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+             .build()
+
+        binding.dataPickerBtn.setOnClickListener {
+            dataPicker.show(supportFragmentManager, "Material Date Picker")
+            dataPicker.addOnPositiveButtonClickListener { datePicked ->
+                val oneDate = datePicked
+                if(datePicked!=null){
+                    binding.dataPickerText.text = "날짜 : "+ convertLongToDate(oneDate)
+                }
+
+            }
+        }
+
+        //calendar Range
+        val dateRangePicker = MaterialDatePicker.Builder.dateRangePicker()
+            .setTitleText("Select dates")
+            .setSelection(
+                Pair(
+                    MaterialDatePicker.thisMonthInUtcMilliseconds(), MaterialDatePicker.todayInUtcMilliseconds()
+                )
+            )
+            .build()
+
+        binding.dataRangeBtn.setOnClickListener {
+            dateRangePicker.show(supportFragmentManager, "Material Date Range Picker")
+            dateRangePicker.addOnPositiveButtonClickListener { datePicked ->
+                val startDate = datePicked.first
+                val endDate = datePicked.second
+                /* Toast.makeText(this, "$startDate $secondDate", Toast.LENGTH_SHORT).show()*/
+
+                if(startDate!=null&&endDate!=null) {
+                    binding.dataPickerText.text =
+                        "여행 시작 : " + convertLongToDate(startDate) + "\n여행 끝일 : " + convertLongToDate(
+                            endDate
+                        )
+                }
+            }
+        }
+
+    }
+
+
+    private fun convertLongToDate(time:Long):String{
+        val date = Date(time)
+        val format = SimpleDateFormat(
+            "yyyy년-MM월-dd일", Locale.getDefault()
+        )
+        return format.format(date)
     }
 
     private fun calculateInSampleSize(fileUri: Uri, reqWidth: Int, reqHeight: Int): Int {
